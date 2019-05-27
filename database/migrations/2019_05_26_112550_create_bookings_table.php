@@ -14,14 +14,19 @@ class CreateBookingsTable extends Migration
     public function up()
     {
         Schema::create('bookings', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->bigIncrements('bookingId');
-            $table->bigInteger('petId');
-            $table->bigInteger('staffId');
+            $table->bigInteger('petId')->unsigned();
+            $table->bigInteger('staffId')->unsigned();
             $table->date('bookingDateTime');       
             $table->longText('symptoms');       
             $table->longText('treatments');       
             $table->longText('notes'); 
             $table->timestamps();
+            
+        });
+
+        Schema::table('bookings', function($table) {
             $table->foreign('petId')->references('petId')->on('pets');
             $table->foreign('staffId')->references('staffId')->on('staff');
         });

@@ -14,6 +14,7 @@ class CreateInventoriesTable extends Migration
     public function up()
     {
         Schema::create('inventories', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->bigIncrements('itemId');      
             $table->string('itemName');       
             $table->mediumText('itemDescription');       

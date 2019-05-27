@@ -14,6 +14,7 @@ class CreatePetsTable extends Migration
     public function up()
     {
         Schema::create('pets', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->bigIncrements('petId');      
             $table->string('petName');       
             $table->string('species');       
@@ -21,8 +22,11 @@ class CreatePetsTable extends Migration
             $table->date('DOB');       
             $table->char('gender', 1);       
             $table->integer('weight');
-            $table->bigInteger('customerId');
+            $table->bigInteger('customerId')->unsigned();
             $table->timestamps();
+        });
+
+        Schema::table('pets', function($table) {
             $table->foreign('customerId')->references('customerId')->on('customers');
         });
     }
