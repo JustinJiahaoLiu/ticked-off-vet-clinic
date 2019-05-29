@@ -11,7 +11,7 @@
 </head>
 <body>
 	@include('inc.nav')
-	<div class="container-fluid bg-secondary">
+	<div class="container-fluid">
 		@include('inc.sidebar')
 		@yield('content')
 	</div>

@@ -11,14 +11,16 @@
 
 	@endif
 	<div class="table-responsive">
-        <table class="table table-striped table-sm">
+        <table class="table table-striped table-sm table-light">
           <thead>
             <tr>
-              <th>#</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
+              <th>Pet ID</th>
+              <th>Pet Name</th>
+              <th>Species</th>
+              <th>Breed</th>
+              <th>DOB</th>
+              <th>Gender</th>
+              <th>Weight</th>
             </tr>
           </thead>
           <tbody>
