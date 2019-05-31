@@ -14,7 +14,7 @@ class PetController extends Controller
      */
     public function index()
     {
-        //
+        return view('pets',['pet'=>Pet::all()]);
     }
 
     /**
@@ -24,7 +24,7 @@ class PetController extends Controller
      */
     public function create()
     {
-        //
+        return view('forms/pet_form', [ 'modify' => 0 ]);
     }
 
     /**
@@ -44,9 +44,9 @@ class PetController extends Controller
      * @param  \App\Model\Pet  $pet
      * @return \Illuminate\Http\Response
      */
-    public function show(Pet $pet)
-    {
-        return view('petinfo',['pet'=>Pet::all()]);
+    public function show(Request $request)
+    {   
+        return view('forms/pet_form', [ 'modify' => 1, 'pet' => Pet::where('petId', 100) ]);
     }
 
     /**

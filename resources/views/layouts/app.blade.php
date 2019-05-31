@@ -13,6 +13,7 @@
 	@include('inc.nav')
 	<div class="container-fluid">
 		@include('inc.sidebar')
+		@include('inc.inner_nav')
 		@yield('content')
 	</div>
 	@include('inc.footer')

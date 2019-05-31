@@ -21,7 +21,7 @@ class CreatePetsTable extends Migration
             $table->string('breed');        
             $table->date('DOB');       
             $table->char('gender', 1);       
-            $table->integer('weight');
+            $table->integer('weight')->unsigned();
             $table->bigInteger('customerId')->unsigned();
             $table->timestamps();
         });

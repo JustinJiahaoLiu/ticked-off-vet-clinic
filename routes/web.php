@@ -17,4 +17,9 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/petinfo', 'PetController@show');
+// pet
+Route::get('/pets', 'PetController@index')->name('pets');
+
+Route::get('/pets/create', 'PetController@create')->name('create_pet');
+
+Route::get('/pets/{petId}', 'PetController@show')->name('edit_pet');

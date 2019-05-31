@@ -2,7 +2,7 @@
 
 @section('content')
 	<div class="container mt-2">
-		<h1 class="text-white">Main Menu</h1>
+		<h1>Main Menu</h1>
 		<div class="container text-center">
 		<img src="/images/TickedOff_Logo.png">
 		</div>
