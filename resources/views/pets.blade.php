@@ -1,9 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+@include('inc.inner_nav')
 	<div class="container mt-2">
 		<h1>Management Pet Info</h1>
-    <a href="{{ route('create_pet') }}" class="btn btn-outline-success mt-3 mb-3">ADD NEW PET</a>
+    <a href="{{ route('create_pet') }}" class="btn btn-outline-success mt-2 mb-2">ADD NEW PET</a>
 
 	<div class="table-responsive">
         <table class="table table-striped table-sm table-light">

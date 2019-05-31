@@ -1,5 +1,5 @@
  <nav class="navbar navbar-light bg-light flex-column p-0 shadow justify-content-start">
-  <ul class="navbar-nav px-3">
+  <ul class="navbar-nav px-2 pt-2">
     <li class="nav-item text-nowrap">
       <a class="nav-link text-primary" href="{{ route('pets')}}">Pets</a>
       <a class="nav-link text-primary" href="#">Customers</a>

@@ -21,5 +21,7 @@ Route::get('/', function () {
 Route::get('/pets', 'PetController@index')->name('pets');
 
 Route::get('/pets/create', 'PetController@create')->name('create_pet');
+Route::post('/pets/create', 'PetController@store')->name('store_pet');
 
 Route::get('/pets/{petId}', 'PetController@show')->name('edit_pet');
+Route::post('/pets/{petId}', 'PetController@update')->name('update_pet');

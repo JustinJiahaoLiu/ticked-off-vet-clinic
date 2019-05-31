@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Pet;
 use Illuminate\Http\Request;
+use App\Model\Customer;
 
 class PetController extends Controller
 {
@@ -35,7 +36,21 @@ class PetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // customerName = 'lastName,firstName'  
+        $customerName = explode(',', $request->input('owner'));
+        $customerId = Customer::where([ ['lastName','=', $customerName[0]], ['firstName','=', $customerName[1]] ])->get();
+
+        $pet = new Pet();
+        $pet->petName = $request->input('petName');
+        $pet->species = $request->input('species');
+        $pet->breed = $request->input('breed');
+        $pet->DOB = $request->input('DOB');
+        $pet->gender = $request->input('gender');
+        $pet->weight = $request->input('weight');
+        $pet->customerId = $customerId[0]->customerId;
+
+        $pet->save();
+        redirect('pets');
     }
 
     /**
@@ -46,7 +61,10 @@ class PetController extends Controller
      */
     public function show(Request $request)
     {   
-        return view('forms/pet_form', [ 'modify' => 1, 'pet' => Pet::where('petId', 100) ]);
+        $pet = Pet::where('petId', $request->petId)->get();
+        $customer = Customer::where('customerId', $pet[0]->customerId )->get();
+
+        return view('forms/pet_form', [ 'modify' => 1, 'pet' => $pet, 'customer' => $customer ]);
     }
 
     /**
