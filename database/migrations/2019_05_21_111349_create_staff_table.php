@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCustomersTable extends Migration
+class CreateStaffTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateCustomersTable extends Migration
      */
     public function up()
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('staff', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->bigIncrements('customerId', 11);       
+            $table->bigIncrements('staffId', 11);
             $table->string('title', 10)->nullable();       
             $table->string('firstName', 50)->nullable();       
             $table->string('lastName', 50)->nullable();       
@@ -27,12 +27,13 @@ class CreateCustomersTable extends Migration
             $table->string('street1', 150)->nullable();       
             $table->string('street2', 150)->nullable();       
             $table->string('suburb', 80)->nullable();       
-            $table->string('state', 3)->nullable();       
-            $table->string('postcode', 4)->nullable();       
+            $table->string('state', 3)->nullable();    
+            $table->string('postcode', 4)->nullable();
+            $table->string('position', 50)->nullable();           
             $table->timestamps();
         });
 
-        Schema::table('customers', function($table) {
+        Schema::table('staff', function($table) {
             $table->foreign('state')->references('state')->on('states');
         });
     }
@@ -44,6 +45,6 @@ class CreateCustomersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('staff');
     }
 }

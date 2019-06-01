@@ -15,11 +15,11 @@ class CreateStaysTable extends Migration
     {
         Schema::create('stays', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->bigIncrements('stayId');
-            $table->date('stayStartDate');
-            $table->date('stayEndDate');      
-            $table->bigInteger('petId')->unsigned();  
-            $table->decimal('stayCost');
+            $table->bigIncrements('stayId', 11);
+            $table->date('stayStartDate')->nullable();
+            $table->date('stayEndDate')->nullable();      
+            $table->bigInteger('petId')->unsigned()->nullable();  
+            $table->decimal('stayCost', 19, 4)->nullable();
             $table->timestamps();
         });
 

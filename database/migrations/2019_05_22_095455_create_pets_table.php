@@ -15,14 +15,14 @@ class CreatePetsTable extends Migration
     {
         Schema::create('pets', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->bigIncrements('petId');      
-            $table->string('petName');       
-            $table->string('species');       
-            $table->string('breed');        
-            $table->date('DOB');       
-            $table->char('gender', 1);       
-            $table->integer('weight')->unsigned();
-            $table->bigInteger('customerId')->unsigned();
+            $table->bigIncrements('petId', 11);      
+            $table->string('petName', 80)->nullable();       
+            $table->string('species', 50)->nullable();       
+            $table->string('breed', 50)->nullable();        
+            $table->date('DOB')->nullable();       
+            $table->char('gender', 1)->nullable();       
+            $table->float('weight')->nullable();     //positive value only
+            $table->bigInteger('customerId', 11)->unsigned()->nullable();
             $table->timestamps();
         });
 

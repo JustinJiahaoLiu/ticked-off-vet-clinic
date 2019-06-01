@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInventoriesTable extends Migration
+class CreateStatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateInventoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('inventories', function (Blueprint $table) {
+        Schema::create('states', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->bigIncrements('itemId');      
-            $table->string('itemName');       
-            $table->mediumText('itemDescription');       
-            $table->integer('numberOnHand');       
-            $table->unsignedInteger('numberOnOrder');       
+            $table->string('state', 3);
             $table->timestamps();
+        });
+
+        Schema::table('states', function($table) {
+            $table->primary('state');
         });
     }
 
@@ -31,6 +31,6 @@ class CreateInventoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('inventories');
+        Schema::dropIfExists('states');
     }
 }
