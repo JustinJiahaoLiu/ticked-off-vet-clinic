@@ -16,7 +16,7 @@ class CreateBookingsTable extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->bigIncrements('bookingId', 11);
-            $table->bigInteger('petId', 11)->unsigned()->nullable();
+            $table->bigInteger('petId')->unsigned()->nullable();
             $table->bigInteger('staffId')->unsigned()->nullable();
             $table->dateTime('bookingDateTime')->nullable();       
             $table->longText('symptoms')->nullable();       

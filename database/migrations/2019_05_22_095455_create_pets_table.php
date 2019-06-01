@@ -22,7 +22,7 @@ class CreatePetsTable extends Migration
             $table->date('DOB')->nullable();       
             $table->char('gender', 1)->nullable();       
             $table->float('weight')->nullable();     //positive value only
-            $table->bigInteger('customerId', 11)->unsigned()->nullable();
+            $table->bigInteger('customerId')->unsigned()->nullable();
             $table->timestamps();
         });
 
