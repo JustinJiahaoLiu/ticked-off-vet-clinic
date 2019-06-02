@@ -34,7 +34,7 @@ class CreateStaffTable extends Migration
         });
 
         Schema::table('staff', function($table) {
-            $table->foreign('state')->references('state')->on('states');
+            $table->foreign('state')->references('state')->on('states')->onDelete('cascade');
         });
     }
 

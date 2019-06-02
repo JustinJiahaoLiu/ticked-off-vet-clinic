@@ -24,7 +24,7 @@ class CreateStaysTable extends Migration
         });
 
         Schema::table('stays', function ($table) {
-             $table->foreign('petId')->references('petId')->on('pets');
+             $table->foreign('petId')->references('petId')->on('pets')->onDelete('cascade');
         });
     }
 

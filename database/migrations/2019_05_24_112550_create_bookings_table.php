@@ -27,8 +27,8 @@ class CreateBookingsTable extends Migration
         });
 
         Schema::table('bookings', function($table) {
-            $table->foreign('petId')->references('petId')->on('pets');
-            $table->foreign('staffId')->references('staffId')->on('staff');
+            $table->foreign('petId')->references('petId')->on('pets')->onDelete('cascade');
+            $table->foreign('staffId')->references('staffId')->on('staff')->onDelete('cascade');
         });
     }
 

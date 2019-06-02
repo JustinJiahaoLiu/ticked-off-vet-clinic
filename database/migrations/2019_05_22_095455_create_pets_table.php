@@ -27,7 +27,7 @@ class CreatePetsTable extends Migration
         });
 
         Schema::table('pets', function($table) {
-            $table->foreign('customerId')->references('customerId')->on('customers');
+            $table->foreign('customerId')->references('customerId')->on('customers')->onDelete('cascade');
         });
     }
 

@@ -4,52 +4,81 @@
 	<div class="container mt-2">
 		<h1>{{ $modify == 1 ? "Edit Pet" : "Add New Pet" }}</h1>
     
-    @if(isset($pet) && isset($customer))
-      @foreach($pet as $pet)
-      @endforeach
-      @foreach($customer as $customer)
-      @endforeach
-    @endif
-    
      <form action="{{ $modify == 1? route('update_pet', ['petId'=> $pet->petId]) : route('store_pet') }}" method="POST">
       @csrf
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="petName">Pet Name</label>
-          <input type="text" class="form-control" id="petName" placeholder="Pet Name" name="petName" value="{{ $modify == 1? $pet->petName: '' }}">
+          <input type="text" class="form-control" id="petName" placeholder="Pet Name" name="petName" value="{{ $modify == 1? $pet->petName: old('petName') }}">
+          <small class="text-danger">{{ $errors->first('petName') }}</small>
         </div>
         <div class="form-group col-md-6">
           <label for="species">Species</label>
-          <input type="text" class="form-control" id="species" placeholder="Species" name="species" value="{{ $modify == 1? $pet->species: '' }}">
+          <input type="text" class="form-control" id="species" placeholder="Species" name="species" value="{{ $modify == 1? $pet->species: old('species') }}">
+          <small class="text-danger">{{ $errors->first('species') }}</small>
         </div>
       </div>
       <div class="form-row">
       <div class="form-group col-md-6">
         <label for="breed">Breed</label>
-        <input type="text" class="form-control" id="breed" placeholder="Breed" name="breed" value="{{ $modify == 1? $pet->breed: '' }}">
+        <input type="text" class="form-control" id="breed" placeholder="Breed" name="breed" value="{{ $modify == 1? $pet->breed: old('breed') }}">
+        <small class="text-danger">{{ $errors->first('breed') }}</small>
       </div>
       <div class="form-group col-md-6">
         <label for="DOB">DOB</label>
-        <input type="text" class="form-control" id="DOB" placeholder="YYYY-MM-DD" name="DOB" value="{{ $modify == 1? $pet->DOB: '' }}">
+        <input type="text" class="form-control" id="DOB" placeholder="Date Of Birth" name="DOB" value="{{ $modify == 1? $pet->DOB: old('DOB') }}">
+        <small class="text-danger">{{ $errors->first('DOB') }}</small>
       </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="gender">Gender</label>
-          <input type="text" class="form-control" id="gender" placeholder="Gender" name="gender" value="{{ $modify == 1? $pet->gender: '' }}">
+          <select type="text" class="form-control" id="gender" placeholder="Gender" name="gender">
+            <option disabled selected value> -- Select Gender -- </option>
+            <option value="M" {{ $modify == 1? ($pet->gender == 'M'? 'selected':''):(old('gender')=='M')?'selected':'' }}>M</option>
+            <option value="F" {{ $modify == 1? ($pet->gender == 'F'? 'selected':''):(old('gender')=='F')?'selected':'' }}>F</option>
+            <option value="U" {{ $modify == 1? ($pet->gender == 'U'? 'selected':''):(old('gender')=='U')?'selected':'' }}>U</option>
+          </select>
+          <small class="text-danger">{{ $errors->first('gender') }}</small>
         </div>
          <div class="form-group col-md-6">
           <label for="weight">Weight</label>
-          <input type="text" class="form-control" id="weight" placeholder="Weight" name="weight" value="{{ $modify == 1? $pet->weight: '' }}">
+          <input type="number" step="0.01" class="form-control" id="weight" placeholder="Weight" name="weight" value="{{ $modify == 1? $pet->weight: old('weight') }}">
+          <small class="text-danger">{{ $errors->first('weight') }}</small>
         </div>
         <div class="form-group col-md-6">
           <label for="owner">Owner</label>
-          <input type="text" class="form-control" id="owner" placeholder="Lastname,FirstName" name="owner" value="{{ $modify == 1? $customer->lastName.','.$customer->firstName: '' }}">
+          <input type="text" class="form-control" id="owner" placeholder="Lastname,FirstName" name="owner" value="{{ $modify == 1? $pet->customer->lastName.','.$pet->customer->firstName: old('owner') }}">
+          <small class="text-danger">{{ $errors->first('owner') }}</small>
         </div>
       </div>
       
       <button type="submit" class="btn btn-success">Save</button>
+      <a class="btn btn-primary float-right" href="{{ route('pets') }}">Cancel</a>
     </form>
 	
 	</div>	{{-- container --}}
+
+  <script>
+    {{--Current Date--}}
+    const d = new Date(),
+    month = d.getMonth();
+    day = d.getDate();
+    year = d.getFullYear();
+
+    {{--Datepicker--}}
+    const picker = datepicker('#DOB',{
+      formatter: (input, date, instance) => {
+        const value = date.toLocaleDateString();
+        input.value = value;
+      },
+      maxDate: new Date(year, month, day),
+    });
+    {{--Sweet Alert--}}
+     @if (session('error_alert'))
+      swal("{{ session('error_alert') }}" , {
+            icon: "error", 
+          });
+    @endif
+  </script>
 @endsection

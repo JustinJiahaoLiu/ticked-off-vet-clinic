@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Pet;
 use Illuminate\Http\Request;
 use App\Model\Customer;
+use Validator;
 
 class PetController extends Controller
 {
@@ -14,7 +15,7 @@ class PetController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
         return view('pets',['pet'=>Pet::all()]);
     }
 
@@ -36,9 +37,23 @@ class PetController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'petName' => 'required|max:80',
+            'species' => 'required',
+            'breed' => 'required',
+            'DOB' => 'required',
+            'gender' => 'required',
+            'weight' => ['required', 'regex:/^(?:[1-9]\d*|0)?(?:\.\d+)?$/u'],
+            'owner' => 'required',
+        ]);
+
+       if ($validator->fails()) {
+            return redirect(route('create_pet'))->with('error_alert', "Oops!Something is wrong!")->withErrors($validator)->withInput();
+        }
+
         // customerName = 'lastName,firstName'  
         $customerName = explode(',', $request->input('owner'));
-        $customerId = Customer::where([ ['lastName','=', $customerName[0]], ['firstName','=', $customerName[1]] ])->get();
+        $customer = Customer::where([ ['lastName','=', $customerName[0]], ['firstName','=', $customerName[1]] ])->first();
 
         $pet = new Pet();
         $pet->petName = $request->input('petName');
@@ -47,10 +62,10 @@ class PetController extends Controller
         $pet->DOB = $request->input('DOB');
         $pet->gender = $request->input('gender');
         $pet->weight = $request->input('weight');
-        $pet->customerId = $customerId[0]->customerId;
+        $pet->customerId = $customer->customerId;
 
         $pet->save();
-        redirect('pets');
+        return redirect(route('pets'))->with('success_alert', 'A New Pet Added Successfully!');
     }
 
     /**
@@ -61,10 +76,9 @@ class PetController extends Controller
      */
     public function show(Request $request)
     {   
-        $pet = Pet::where('petId', $request->petId)->get();
-        $customer = Customer::where('customerId', $pet[0]->customerId )->get();
+        $pet = Pet::where('petId', $request->petId)->first();
 
-        return view('forms/pet_form', [ 'modify' => 1, 'pet' => $pet, 'customer' => $customer ]);
+        return view('forms/pet_form', [ 'modify' => 1, 'pet' => $pet ]);
     }
 
     /**
@@ -87,7 +101,21 @@ class PetController extends Controller
      */
     public function update(Request $request, Pet $pet)
     {
-        //
+        // customerName = 'lastName,firstName'  
+        $customerName = explode(',', $request->input('owner'));
+        $customerId = Customer::where([ ['lastName','=', $customerName[0]], ['firstName','=', $customerName[1]] ])->get();
+
+        $pet = Pet::where('petId',$request->petId)->first();
+        $pet->petName = $request->input('petName');
+        $pet->species = $request->input('species');
+        $pet->breed = $request->input('breed');
+        $pet->DOB = $request->input('DOB');
+        $pet->gender = $request->input('gender');
+        $pet->weight = $request->input('weight');
+        $pet->customerId = $customerId[0]->customerId;
+
+        $pet->save();
+        return redirect('pets')->with('success_alert', 'A Pet Record Has Been Updated Successfully!');
     }
 
     /**
@@ -96,8 +124,10 @@ class PetController extends Controller
      * @param  \App\Model\Pet  $pet
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pet $pet)
-    {
-        //
+    public function destroy(Request $request, Pet $pet)
+    {   
+        $pet = Pet::where('petId',$request->petId)->first();
+        $pet->delete();
+        return redirect('pets');
     }
 }

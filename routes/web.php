@@ -25,3 +25,5 @@ Route::post('/pets/create', 'PetController@store')->name('store_pet');
 
 Route::get('/pets/{petId}', 'PetController@show')->name('edit_pet');
 Route::post('/pets/{petId}', 'PetController@update')->name('update_pet');
+
+Route::get('/pets/delete/{petId}', 'PetController@destroy')->name('delete_pet');
