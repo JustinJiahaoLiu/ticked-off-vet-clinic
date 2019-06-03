@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Pet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Model\Customer;
 use Validator;
 
@@ -26,7 +27,9 @@ class PetController extends Controller
      */
     public function create()
     {
-        return view('forms/pet_form', [ 'modify' => 0 ]);
+        $species = DB::table('pets')->select('species')->distinct()->get();
+        $customer = Customer::all();
+        return view('forms/pet_form', [ 'modify' => 0, 'customer' => $customer, 'species' => $species ]);
     }
 
     /**
@@ -40,7 +43,7 @@ class PetController extends Controller
         $validator = Validator::make($request->all(), [
             'petName' => 'required|max:80',
             'species' => 'required',
-            'breed' => 'required',
+            'breed' => 'required|max:50',
             'DOB' => 'required',
             'gender' => 'required',
             'weight' => ['required', 'regex:/^(?:[1-9]\d*|0)?(?:\.\d+)?$/u'],
@@ -76,9 +79,11 @@ class PetController extends Controller
      */
     public function show(Request $request)
     {   
+        $species = DB::table('pets')->select('species')->distinct()->get();
         $pet = Pet::where('petId', $request->petId)->first();
+        $customer = Customer::all();
 
-        return view('forms/pet_form', [ 'modify' => 1, 'pet' => $pet ]);
+        return view('forms/pet_form', [ 'modify' => 1, 'pet' => $pet, 'customer'=> $customer, 'species' => $species ]);
     }
 
     /**

@@ -14,7 +14,12 @@
         </div>
         <div class="form-group col-md-6">
           <label for="species">Species</label>
-          <input type="text" class="form-control" id="species" placeholder="Species" name="species" value="{{ $modify == 1? $pet->species: old('species') }}">
+          <select type="text" class="form-control" id="species" name="species">
+          <option disabled selected value> -- Select Species -- </option>
+          @foreach($species as $species)
+          <option value="{{ $species->species }}" {{ $modify == 1 ? ($pet->species == $species->species?'selected':''):(old('species')==$species->species?'selected':'') }}>{{ $species->species }}</option>
+          @endforeach
+          </select>
           <small class="text-danger">{{ $errors->first('species') }}</small>
         </div>
       </div>
@@ -33,7 +38,7 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="gender">Gender</label>
-          <select type="text" class="form-control" id="gender" placeholder="Gender" name="gender">
+          <select type="text" class="form-control" id="gender" name="gender">
             <option disabled selected value> -- Select Gender -- </option>
             <option value="M" {{ $modify == 1? ($pet->gender == 'M'? 'selected':''):(old('gender')=='M')?'selected':'' }}>M</option>
             <option value="F" {{ $modify == 1? ($pet->gender == 'F'? 'selected':''):(old('gender')=='F')?'selected':'' }}>F</option>
@@ -48,7 +53,12 @@
         </div>
         <div class="form-group col-md-6">
           <label for="owner">Owner</label>
-          <input type="text" class="form-control" id="owner" placeholder="Lastname,FirstName" name="owner" value="{{ $modify == 1? $pet->customer->lastName.','.$pet->customer->firstName: old('owner') }}">
+          <select type="text" class="form-control" id="owner" name="owner">
+            <option disabled selected value> -- Select Customer -- </option>
+            @foreach($customer as $customer)
+            <option value="{{ $customer->lastName.','.$customer->firstName }}" {{ $modify == 1? ($customer->customerId == $pet->customerId?'selected':''):(old('owner')==$customer->lastName.','.$customer->firstName?'selected':'')}}>{{ $customer->lastName.','.$customer->firstName }}</option>
+            @endforeach
+          </select>
           <small class="text-danger">{{ $errors->first('owner') }}</small>
         </div>
       </div>
@@ -61,16 +71,21 @@
 
   <script>
     {{--Current Date--}}
-    const d = new Date(),
-    month = d.getMonth();
-    day = d.getDate();
-    year = d.getFullYear();
+    const now = new Date(),
+    month = now.getMonth();
+    day = now.getDate();
+    year = now.getFullYear();
 
     {{--Datepicker--}}
     const picker = datepicker('#DOB',{
       formatter: (input, date, instance) => {
         const value = date.toLocaleDateString();
-        input.value = value;
+        m = (date.getMonth() + 1) ;
+        d = date.getDate().toString();
+        y = date.getFullYear().toString();
+        arr = [y,m,d];
+        time = arr.join('-');
+        input.value = time;
       },
       maxDate: new Date(year, month, day),
     });
