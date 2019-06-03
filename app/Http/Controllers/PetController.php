@@ -106,6 +106,20 @@ class PetController extends Controller
      */
     public function update(Request $request, Pet $pet)
     {
+        $validator = Validator::make($request->all(), [
+            'petName' => 'required|max:80',
+            'species' => 'required',
+            'breed' => 'required|max:50',
+            'DOB' => 'required',
+            'gender' => 'required',
+            'weight' => ['required', 'regex:/^(?:[1-9]\d*|0)?(?:\.\d+)?$/u'],
+            'owner' => 'required',
+        ]);
+
+       if ($validator->fails()) {
+            return redirect(route('edit_pet', ['petId'=> $request->petId]))->with('error_alert', "Oops!Something is wrong!")->withErrors($validator)->withInput();
+        }
+
         // customerName = 'lastName,firstName'  
         $customerName = explode(',', $request->input('owner'));
         $customerId = Customer::where([ ['lastName','=', $customerName[0]], ['firstName','=', $customerName[1]] ])->get();
