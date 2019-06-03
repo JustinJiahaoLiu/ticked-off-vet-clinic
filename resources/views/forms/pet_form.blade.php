@@ -14,7 +14,7 @@
         </div>
         <div class="form-group col-md-6">
           <label for="species">Species</label>
-          <select type="text" class="form-control" id="species" name="species">
+          <select class="form-control" id="species" name="species">
           <option disabled selected value> -- Select Species -- </option>
           @foreach($species as $species)
           <option value="{{ $species->species }}" {{ $modify == 1 ? ($pet->species == $species->species?'selected':''):(old('species')==$species->species?'selected':'') }}>{{ $species->species }}</option>
@@ -38,7 +38,7 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="gender">Gender</label>
-          <select type="text" class="form-control" id="gender" name="gender">
+          <select class="form-control" id="gender" name="gender">
             <option disabled selected value> -- Select Gender -- </option>
             <option value="M" {{ $modify == 1? ($pet->gender == 'M'? 'selected':''):(old('gender')=='M')?'selected':'' }}>M</option>
             <option value="F" {{ $modify == 1? ($pet->gender == 'F'? 'selected':''):(old('gender')=='F')?'selected':'' }}>F</option>
@@ -53,7 +53,7 @@
         </div>
         <div class="form-group col-md-6">
           <label for="owner">Owner</label>
-          <select type="text" class="form-control" id="owner" name="owner">
+          <select class="form-control" id="owner" name="owner">
             <option disabled selected value> -- Select Customer -- </option>
             @foreach($customer as $customer)
             <option value="{{ $customer->lastName.','.$customer->firstName }}" {{ $modify == 1? ($customer->customerId == $pet->customerId?'selected':''):(old('owner')==$customer->lastName.','.$customer->firstName?'selected':'')}}>{{ $customer->lastName.','.$customer->firstName }}</option>

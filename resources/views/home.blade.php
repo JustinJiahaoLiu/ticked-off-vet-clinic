@@ -19,7 +19,7 @@
 		      <li>Update Pet Info</li>		      
 		      <li>Remove Pet Info</li>
 		    </ul>
-		    <a href="#"><button type="button" class="btn btn-lg btn-block btn-primary">Get Started</button></a>
+		    <a href="{{ route('pets') }}"><button type="button" class="btn btn-lg btn-block btn-primary">Get Started</button></a>
 		  </div>
 		</div>
 		<div class="card mb-4 shadow-sm">

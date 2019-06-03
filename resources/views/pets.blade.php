@@ -6,7 +6,22 @@
 		<h1>Management Pet Info</h1>
     <a href="{{ route('create_pet') }}" class="btn btn-outline-success mt-2 mb-2">ADD NEW PET</a>
 
-	<div class="table-responsive">
+    <div class="d-flex justify-content-start align-items-center">
+    <label class="mb-0" for="sort">Sort:</label>
+    <select class="ml-2" id="sort" name="sort" onchange="sort();">
+      <option disabled selected value> -- Select Species -- </option>
+      <option value="petId">Pet ID</option>
+      <option value="petName">Pet Name</option>
+      <option value="species">Species</option>
+      <option value="breed">Breed</option>
+      <option value="DOB">DOB</option>
+      <option value="gender">Gender</option>
+      <option value="weight">Weight</option>
+      <option value="customerId">Owner</option>
+    </select>
+    <button class="btn btn-outline-secondary ml-2" id="toggler" value="Ascending" onclick="toggle();"> Ascending<i class="fas fa-arrow-up"></i> </button>
+    </div> 
+	<div class="table-responsive mt-2">
         <table class="table table-striped table-sm table-light">
           <thead>
             <tr>
@@ -83,6 +98,23 @@
           swal("Your pet record is safe!");
         }
       });
+    }
+
+    // toggle button
+    function toggle(){
+      var toggler = document.getElementById('toggler');
+      if(toggler.value == 'Ascending') {
+        toggler.value = "Descending";
+        toggler.innerHTML = "Descending<i class=\"fas fa-arrow-down\"></i>";
+      }else{
+        toggler.value = "Ascending";
+        toggler.innerHTML = "Ascending<i class=\"fas fa-arrow-up\"></i>";
+      }
+    }
+
+    // sort function
+    function sort(){
+      window.location.href = "{{ route('pets')}}"
     }
   </script>
 @endsection
