@@ -15,9 +15,16 @@ class PetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {   
-        return view('pets',['pet'=>Pet::all()]);
+
+        if(isset($_GET['key'])&&isset($_GET['order'])){
+            $key = $request->query('key');
+            $order = $request->query('order')=='Ascending'?'asc':'desc';
+            return view('pets', ['pet'=>Pet::orderBy($key, $order)->get(), 'order'=>$request->query('order')]);
+        }else{
+            return view('pets',['pet'=>Pet::all()]);
+        }
     }
 
     /**

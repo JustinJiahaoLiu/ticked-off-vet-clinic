@@ -14,12 +14,27 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" style="color:orange;" href="#">
+              <h5><i class="fas fa-list-ul mr-2"></i>Statistics</h5>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" style="color:orange;" href="#">
               <h5><i class="fas fa-calculator mr-2"></i>Boarding Cost Calc</h5>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" style="color:orange;" href="#">
               <h5><i class="fas fa-file-export mr-2"></i>Qick Export Pet Info</h5>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" style="color:orange;" href="/about/company">
+              <h5><i class="fas fa-question-circle mr-2"></i>About this company</h5>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" style="color:orange;" href="/about/application">
+              <h5><i class="fas fa-question-circle mr-2"></i>About this application</h5>
             </a>
           </li>
         </ul>

@@ -17,6 +17,15 @@ Route::get('/', function () {
     return view('home');
 });
 
+// about
+Route::get('/about/company', function () {
+    return view('about_company');
+});
+
+Route::get('/about/application', function () {
+    return view('about_application');
+});
+
 // pet
 Route::get('/pets', 'PetController@index')->name('pets');
 

@@ -72,8 +72,7 @@
 		</div>
 
 	
-		<a class="btn btn-lg btn-success btn-block mb-5" href="#">Watch The New Promo Video</a>
+		<button class="btn btn-lg btn-success btn-block mb-5" onclick="swal({title:'Coming soon...'});">Watch The New Promo Video</button>
 
-	</div>
 	</div>
 @endsection

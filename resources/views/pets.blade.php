@@ -8,7 +8,7 @@
 
     <div class="d-flex justify-content-start align-items-center">
     <label class="mb-0" for="sort">Sort:</label>
-    <select class="ml-2" id="sort" name="sort" onchange="sort();">
+    <select class="ml-2" id="sort" name="sort" onchange="sort(this);">
       <option disabled selected value> -- Select Species -- </option>
       <option value="petId">Pet ID</option>
       <option value="petName">Pet Name</option>
@@ -19,7 +19,8 @@
       <option value="weight">Weight</option>
       <option value="customerId">Owner</option>
     </select>
-    <button class="btn btn-outline-secondary ml-2" id="toggler" value="Ascending" onclick="toggle();"> Ascending<i class="fas fa-arrow-up"></i> </button>
+    <button class="btn btn-outline-secondary btn-sm ml-2" id="toggler" value="{{ isset($order)?$order:'Ascending'}}" onclick="toggle();">
+      {!! isset($order)?($order=="Ascending"?"Ascending<i class=\"fas fa-arrow-up\"></i>":"Descending<i class=\"fas fa-arrow-down\"></i>" ):"Ascending<i class=\"fas fa-arrow-up\"></i>" !!}</button>
     </div> 
 	<div class="table-responsive mt-2">
         <table class="table table-striped table-sm table-light">
@@ -113,8 +114,10 @@
     }
 
     // sort function
-    function sort(){
-      window.location.href = "{{ route('pets')}}"
+    function sort(event){
+      var key = event.value;
+      var order = document.getElementById('toggler').value;
+      window.location.href = "/pets?key="+key+"&order="+order;
     }
   </script>
 @endsection
