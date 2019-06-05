@@ -18,7 +18,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" style="color:orange;" href="#">
+            <a class="nav-link" style="color:orange;" href="{{ route('calculator')}}">
               <h5><i class="fas fa-calculator mr-2"></i>Boarding Cost Calc</h5>
             </a>
           </li>

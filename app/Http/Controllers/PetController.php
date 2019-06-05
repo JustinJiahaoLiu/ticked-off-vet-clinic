@@ -156,4 +156,93 @@ class PetController extends Controller
         $pet->delete();
         return redirect('pets');
     }
+
+    /**
+     * Display calculator
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function calculator()
+    {   
+        $species = DB::table('pets')->select('species')->distinct()->get();
+        return view('calculator', ['species' => $species]);
+    }
+
+    /**
+     * Calculate how much it will cost to have a pet board at the vet.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function calculate(Request $request)
+    {   
+        $validator = Validator::make($request->all(), [
+            'species' => 'required',
+            'weight' => ['required', 'regex:/^(?:[1-9]\d*|0)?(?:\.\d+)?$/u'],
+            'stay' => ['required', 'regex:/^(0|[1-9][0-9]*)$/u', 'not_in:0'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(route('calculator'))->with('error_alert', "Oops!Something is wrong!")->withErrors($validator)->withInput();
+        }
+
+        // Calculate the cost for boarding
+        $base_rate = 20;
+
+        switch ($request->input('species')) {
+            case 'Cat':
+                $species_rate = 5;
+                break;
+            case 'Dog':
+                $species_rate = 5;
+                break;
+            case 'Ferret':
+                $species_rate = 5;
+                break;
+            case 'Goat':
+                $species_rate = 12;
+                break;
+            case 'Guinea pig':
+                $species_rate = 0;
+                break;
+            case 'Horse':
+                $species_rate = 22;
+                break;
+            case 'Koala':
+                $species_rate = 20;
+                break;
+            case 'Mouse':
+                $species_rate = 0;
+                break;
+            case 'Rabbit':
+                $species_rate = 3;
+                break;
+            case 'Rat':
+                $species_rate = 0;
+                break;
+            case 'Snake':
+                $species_rate = 15;
+                break;
+            case 'Tortoise':
+                $species_rate = 0;
+                break;
+            case 'Yak':
+                $species_rate = 108;
+                break;
+        }
+
+        if($request->input('weight') >= 12){
+            $fatty_rate = ($request->input('weight')-12)*1.5;   //fatty factor
+        }else{
+            $fatty_rate = 0;
+        }
+
+        if($request->input('stay') > 10){
+            $final_price = 0.9*($request->input('stay')*($base_rate+$species_rate+$fatty_rate));      //10% discount
+        }else{
+            $final_price = $request->input('stay')*($base_rate+$species_rate+$fatty_rate);
+        }
+
+        return redirect(route('calculator'))->with('final_price', $final_price)->withInput();
+
+    }
 }
