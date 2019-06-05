@@ -51,7 +51,7 @@
 		      <li>Stay Length</li>		      
 		      <li>Total Cost</li>
 		    </ul>
-		    <a href="#"><button type="button" class="btn btn-lg btn-block btn-primary">Get Started</button></a>
+		    <a href="{{ route('calculator')}}"><button type="button" class="btn btn-lg btn-block btn-primary">Get Started</button></a>
 		  </div>
 		</div>
 		<div class="card mb-4 shadow-sm">

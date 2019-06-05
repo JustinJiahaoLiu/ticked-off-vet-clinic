@@ -40,3 +40,8 @@ Route::get('/pets/delete/{petId}', 'PetController@destroy')->name('delete_pet');
 // calculator
 Route::get('/calculator', 'PetController@calculator')->name('calculator');
 Route::post('/calculator', 'PetController@calculate')->name('calculate');
+
+
+// statistics
+Route::get('/statistics', 'PetController@statistics')->name('statistics');
+Route::post('/statistics', 'PetController@statisticsCal')->name('statisticsCal');

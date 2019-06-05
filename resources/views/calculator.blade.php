@@ -29,7 +29,7 @@
           <small class="text-danger">{{ $errors->first('stay') }}</small>
       </div>
       
-      <button type="submit" class="btn btn-success">Calculate</button>
+      <button type="submit" class="btn btn-success mb-2">Calculate</button>
       @if(session('final_price'))
       <div class="form-group form-row">
           <label for="cost" class="col-md-2 col-form-label"><h3>Total Cost:</h3></label>

@@ -13,7 +13,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" style="color:orange;" href="#">
+            <a class="nav-link" style="color:orange;" href="{{ route('statistics')}}">
               <h5><i class="fas fa-list-ul mr-2"></i>Statistics</h5>
             </a>
           </li>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Pet;
+use App\Model\Stay;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Model\Customer;
@@ -243,6 +244,37 @@ class PetController extends Controller
         }
 
         return redirect(route('calculator'))->with('final_price', $final_price)->withInput();
-
     }
+
+    /**
+     * Display statistics
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function statistics()
+    {   
+        $short_stay = DB::table('stays')->select(DB::raw('DATEDIFF(stayEndDate,stayStartDate) AS days'))
+                                        ->orderBy('Days','asc')
+                                        ->first();
+        $long_stay = DB::table('stays')->select(DB::raw('DATEDIFF(stayEndDate,stayStartDate) AS days'))
+                                        ->orderBy('Days','desc')
+                                        ->first();
+        $avg_stay = DB::table('stays')->select(DB::raw('AVG(DATEDIFF(stayEndDate,stayStartDate)) AS days'))
+                                        ->first();
+        dd($avg_stay); 
+
+        return view('statistics',['short_stay'=>$short_stay,'long_stay'=>$long_stay, 'avg_stay'=>$avg_stay] );                         
+    }
+
+    /**
+     * Calculate how much it will cost to have a pet board at the vet.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function statisticsCal()
+    {   
+        $species = DB::table('pets')->select('species')->distinct()->get();
+        return view('calculator', ['species' => $species]);
+    }
+
 }
