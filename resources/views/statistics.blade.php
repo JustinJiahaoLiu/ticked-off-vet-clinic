@@ -40,6 +40,7 @@
       </tbody>
     </table>
     <form class="mt-5" action="{{ route('statisticsCal') }}" method="POST">
+      @csrf
       <div class="form-group form-row">
           <label for="species" class="col-md-1 col-form-label">Species</label>
           <select class="form-control col-md-6" id="species" name="species">
@@ -48,6 +49,7 @@
           <option value="{{ $species->species }}" {{ old('species')==$species->species?'selected':''}}>{{ $species->species }}</option>
           @endforeach
           </select>
+          <small class="text-danger">{{ $errors->first('species') }}</small>
       </div>
       <div class="form-group form-row">
           <label for="stay" class="col-md-2 col-form-label"><p>NO. of stays:</p></label>

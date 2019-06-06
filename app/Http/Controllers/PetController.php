@@ -275,9 +275,8 @@ class PetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function statisticsCal()
+    public function statisticsCal(Request $request)
     {   
-        $species = DB::table('pets')->select('species')->distinct()->get();
         $validator = Validator::make($request->all(), [
             'species' => 'required',
         ]);
@@ -285,7 +284,22 @@ class PetController extends Controller
         if ($validator->fails()) {
             return redirect(route('statistics'))->with('error_alert', "Oops!Something is wrong!")->withErrors($validator);
         }
-        return view('statistics', ['species' => $species]);
+
+        // Get stay info
+        $total_stay;
+        $total_cost;
+        $species = $request->input('species');
+        $pet = Pet::where('species',$species)->get();
+        foreach ($pet as $pet) {
+           $stay = $pet->stay;
+           foreach ($stay as $stay) {
+            $total_cost += ($stay->stayEndDate - $stay->stayStartDate);
+            $total_cost += $stay->stayCost;
+           }
+        }
+        
+
+        return redirect(route('statistics'))->with(['species' => $species]);
     }
 
 }
