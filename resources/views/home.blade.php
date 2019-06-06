@@ -34,7 +34,7 @@
 		      <li>Species Total Stay</li>
 		      <li>Species Total Amount Paid</li>
 		    </ul>
-		    <a href="#"><button type="button" class="btn btn-lg btn-block btn-primary">Get started</button></a>
+		    <a href="{{ route('statistics')}}"><button type="button" class="btn btn-lg btn-block btn-primary">Get started</button></a>
 		  </div>
 		</div>
 		</div>

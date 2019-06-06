@@ -265,8 +265,9 @@ class PetController extends Controller
         $high_cost = Stay::orderBy('stayCost', 'desc')->first('stayCost');
         $avg_cost = DB::table('stays')->select(DB::raw('AVG(stayCost) AS stayCost'))
                                       ->first();
+        $species = DB::table('pets')->select('species')->distinct()->get();
 
-        return view('statistics',['short_stay'=>$short_stay,'long_stay'=>$long_stay, 'avg_stay'=>$avg_stay,'low_cost'=>$low_cost, 'high_cost'=>$high_cost, 'avg_cost'=>$avg_cost] );                         
+        return view('statistics',['short_stay'=>$short_stay,'long_stay'=>$long_stay, 'avg_stay'=>$avg_stay,'low_cost'=>$low_cost, 'high_cost'=>$high_cost, 'avg_cost'=>$avg_cost, 'species'=>$species] );                         
     }
 
     /**
@@ -277,7 +278,14 @@ class PetController extends Controller
     public function statisticsCal()
     {   
         $species = DB::table('pets')->select('species')->distinct()->get();
-        return view('calculator', ['species' => $species]);
+        $validator = Validator::make($request->all(), [
+            'species' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(route('statistics'))->with('error_alert', "Oops!Something is wrong!")->withErrors($validator);
+        }
+        return view('statistics', ['species' => $species]);
     }
 
 }
