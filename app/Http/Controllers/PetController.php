@@ -261,9 +261,12 @@ class PetController extends Controller
                                         ->first();
         $avg_stay = DB::table('stays')->select(DB::raw('AVG(DATEDIFF(stayEndDate,stayStartDate)) AS days'))
                                         ->first();
-        dd($avg_stay); 
+        $low_cost = Stay::orderBy('stayCost', 'asc')->first('stayCost');
+        $high_cost = Stay::orderBy('stayCost', 'desc')->first('stayCost');
+        $avg_cost = DB::table('stays')->select(DB::raw('AVG(stayCost) AS stayCost'))
+                                      ->first();
 
-        return view('statistics',['short_stay'=>$short_stay,'long_stay'=>$long_stay, 'avg_stay'=>$avg_stay] );                         
+        return view('statistics',['short_stay'=>$short_stay,'long_stay'=>$long_stay, 'avg_stay'=>$avg_stay,'low_cost'=>$low_cost, 'high_cost'=>$high_cost, 'avg_cost'=>$avg_cost] );                         
     }
 
     /**
