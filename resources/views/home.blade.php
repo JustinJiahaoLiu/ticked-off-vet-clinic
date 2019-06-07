@@ -66,7 +66,7 @@
 		      <li>Save To User's Local Storage</li>
 		      <li>Owner Information Included</li>
 		    </ul>
-		    <a href="#"><button type="button" class="btn btn-lg btn-block btn-primary">Export to CSV</button></a>
+		    <a href="{{route('export')}}"><button type="button" class="btn btn-lg btn-block btn-primary">Export to CSV</button></a>
 		  </div>
 		</div>
 		</div>

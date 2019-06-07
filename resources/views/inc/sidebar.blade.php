@@ -23,7 +23,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" style="color:orange;" href="#">
+            <a class="nav-link" style="color:orange;" href="{{route('export')}}">
               <h5><i class="fas fa-file-export mr-2"></i>Qick Export Pet Info</h5>
             </a>
           </li>

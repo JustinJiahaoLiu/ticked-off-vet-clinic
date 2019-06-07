@@ -51,18 +51,23 @@
           </select>
           <small class="text-danger">{{ $errors->first('species') }}</small>
       </div>
+
+      @if(session('total_stay'))
       <div class="form-group form-row">
           <label for="stay" class="col-md-2 col-form-label"><p>NO. of stays:</p></label>
-          @if(session('total_stay'))
-          <p class="col-md-3 align-self-center" id="stay" name="stay">{{ session('total_stay') }}</p>
-          @endif
+          
+          <p class="col-md-3 align-self-center" id="stay" name="stay">{{ session('total_stay') }}</p>     
       </div>
+      @endif
+
+      @if(session('total_cost'))
       <div class="form-group form-row">
           <label for="amount" class="col-md-2 col-form-label"><p>Total amount paid:</p></label>
-          @if(session('total_cost'))
+          
           <p class="col-md-3 align-self-center" id="amount" name="amount">${{ session('total_cost') }}</p>
-          @endif
       </div>
+      @endif
+      
       <button type="submit" class="btn btn-success mb-2">Calculate</button>
     </form>
 	

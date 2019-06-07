@@ -26,7 +26,7 @@ Route::get('/about/application', function () {
     return view('about_application');
 });
 
-// pet
+//-----------------------------------------pet--------------------------------------------------
 Route::get('/pets', 'PetController@index')->name('pets');
 
 Route::get('/pets/create', 'PetController@create')->name('create_pet');
@@ -45,3 +45,6 @@ Route::post('/calculator', 'PetController@calculate')->name('calculate');
 // statistics
 Route::get('/statistics', 'PetController@statistics')->name('statistics');
 Route::post('/statistics', 'PetController@statisticsCal')->name('statisticsCal');
+
+// export to csv
+Route::get('/export', 'PetController@export')->name('export');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Pet;
 use App\Model\Stay;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
 use App\Model\Customer;
 use Validator;
@@ -271,7 +272,7 @@ class PetController extends Controller
     }
 
     /**
-     * Calculate how much it will cost to have a pet board at the vet.
+     * Display the total stays and total cost for different species
      *
      * @return \Illuminate\Http\Response
      */
@@ -300,6 +301,37 @@ class PetController extends Controller
         
 
         return redirect(route('statistics'))->with('total_stay', $total_stay)->with('total_cost',$total_cost)->withInput();
+    }
+
+    /**
+     * Export entire list of pets in the database to a csv file
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function export()
+    {
+        $headers = array(
+        "Content-type" => "text/csv",
+        "Content-Disposition" => "attachment; filename=pet.csv",
+        "Pragma" => "no-cache",
+        "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+        "Expires" => "0"
+        );
+
+        $pets = Pet::all();
+        $columns = array('Pet Name', 'Species', 'Breed', 'Date of Birth', 'Gender', 'Weight', 'Owner');
+        $callback = function() use ($pets, $columns)
+            {
+                $file = fopen('php://output', 'w');
+                fputcsv($file, $columns);
+
+                foreach($pets as $pet) {
+                    fputcsv($file, array($pet->petName, $pet->species, $pet->breed, $pet->DOB, $pet->gender, $pet->weight, $pet->customer->lastName.','.$pet->customer->firstName));
+                }
+                fclose($file);
+            };
+        return Response::stream($callback, 200, $headers);
+
     }
 
 }
