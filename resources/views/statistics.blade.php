@@ -53,11 +53,15 @@
       </div>
       <div class="form-group form-row">
           <label for="stay" class="col-md-2 col-form-label"><p>NO. of stays:</p></label>
-          <p class="col-md-3 align-self-center" id="stay" name="stay"></p>
+          @if(session('total_stay'))
+          <p class="col-md-3 align-self-center" id="stay" name="stay">{{ session('total_stay') }}</p>
+          @endif
       </div>
       <div class="form-group form-row">
           <label for="amount" class="col-md-2 col-form-label"><p>Total amount paid:</p></label>
-          <p class="col-md-3 align-self-center" id="amount" name="amount">$</p>
+          @if(session('total_cost'))
+          <p class="col-md-3 align-self-center" id="amount" name="amount">${{ session('total_cost') }}</p>
+          @endif
       </div>
       <button type="submit" class="btn btn-success mb-2">Calculate</button>
     </form>

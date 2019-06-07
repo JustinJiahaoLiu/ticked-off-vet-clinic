@@ -286,20 +286,20 @@ class PetController extends Controller
         }
 
         // Get stay info
-        $total_stay;
-        $total_cost;
+        $total_stay=0;
+        $total_cost=0;
         $species = $request->input('species');
         $pet = Pet::where('species',$species)->get();
         foreach ($pet as $pet) {
            $stay = $pet->stay;
            foreach ($stay as $stay) {
-            $total_cost += ($stay->stayEndDate - $stay->stayStartDate);
+            $total_stay += (strtotime($stay->stayEndDate) - strtotime($stay->stayStartDate))/(60*60*24);
             $total_cost += $stay->stayCost;
            }
         }
         
 
-        return redirect(route('statistics'))->with(['species' => $species]);
+        return redirect(route('statistics'))->with('total_stay', $total_stay)->with('total_cost',$total_cost)->withInput();
     }
 
 }
